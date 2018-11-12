@@ -9,15 +9,21 @@
 import UIKit
 
 
-class sak: NSCopying {
+class sak: NSObject, NSCopying {
     
-    var name: String?
+    @objc var name: String?
     init(name: String) {
         self.name = name
     }
     func copy(with zone: NSZone? = nil) -> Any {
         return sak(name: self.name ?? "default")
     }
+    
+    func test()  {
+        self.setValue("some text is chan?ged kvo text setting", forKey: "name")
+    }
+    
+    
 }
 /*
  https://medium.freecodecamp.org/deep-copy-vs-shallow-copy-and-how-you-can-use-them-in-swift-c623833f5ad3
@@ -27,32 +33,43 @@ class sak: NSCopying {
  https://learnappmaking.com/lazy-computed-properties-swift/
  */
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, JustADelegate {
+    
+    func dataCommunication(msg: String?) {
+        print(" printing from first vc :: \(msg)")
+    }
 
-//    let testStr = "some text"
+    @objc var testStr = "some text"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //MARK: Coping object NScoping...
         let sak1 = sak(name: "saket")
         let sak2 = sak1.copy() as! sak
         sak2.name = "new saket"
         
-        print(sak1.name, sak2.name)
+        //MARK: KVO Key value complaint.
+        self.addObserver(self, forKeyPath: #keyPath(ViewController.testStr), options: [.new, .old], context: nil)
         
         
-        
-        
-        
-//        self.setValue("some text is chan?ged kvo text setting", forKey: "some text")
-        
-//        print(" \(self.testStr)")
+        //MARK: KVC Key value complaint.
+        self.setValue(" some kvc test .... ", forKey: #keyPath(ViewController.testStr))
         
         print("============== V1   viewDidLoad")
     }
     
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+//        print("\(keyPath, object, change, context)", separator: "  ::::  ", terminator: "======== ENDED")
+        
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
-        print("============== V1   viewWillAppear")
+         var sak1 = sak(name: "saket")
+//         sak1.value(forKeyPath: #keyPath(sak.name)) // 0
+         sak1.setValue("saket has set a new name", forKeyPath: #keyPath(sak.name))
+ 
+        print("============== V1   viewWillAppear \(sak1.name)")
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -166,13 +183,18 @@ class ViewController: UIViewController {
 //        self.sleeping()
 //        self.changeNumber(num: num1)
 //        self.changeChar(char: &char1)
-//        self.performSegue(withIdentifier: "secondVC", sender: nil)
+        self.performSegue(withIdentifier: "secondVC", sender: nil)
+        
 //        let push = self.pushBehavior
 //        let push1 = self.pushBehavior1
     }
     
     
-    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let identifier = segue.identifier , let destination = segue.destination as? ViewControllerSecond else { return }
+        destination.firstVC = self
+        destination.delegate = self
+    }
     
 }
 
