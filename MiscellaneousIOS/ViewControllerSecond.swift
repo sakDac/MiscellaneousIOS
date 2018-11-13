@@ -10,6 +10,7 @@ import UIKit
 
 protocol JustADelegate: class {
     func dataCommunication(msg: String?)
+    func test()
 }
 
 class ViewControllerSecond: UIViewController {

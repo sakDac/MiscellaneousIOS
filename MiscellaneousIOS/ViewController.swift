@@ -31,18 +31,68 @@ class sak: NSObject, NSCopying {
  
  https://stackoverflow.com/questions/31515805/difference-between-computed-property-and-property-set-with-closure
  https://learnappmaking.com/lazy-computed-properties-swift/
+ 
+ Exilient Technologies - 10 nov 2018
+ =====================
+ Codable
+ Thread vs dispatch
+ Sync using thread
+ What is gcd
+ What is generics
+ What is kvc and kvo  -> done
+ What are size classes -> done
+ What is autolayout -> done
+ States of the app
+ Why is swift protocol oriented language
+ Why use core data in place in of sqlite
+ Difference b/w swift 4 and 4.2 -> done (enumation in enums, random int generator takes a range)
+ Push notifications
+ Submitting app to store
+ Svn vs git -> done https://stackoverflow.com/questions/871/why-is-git-better-than-subversion
  */
 
-class ViewController: UIViewController, JustADelegate {
-    
-    func dataCommunication(msg: String?) {
-        print(" printing from first vc :: \(msg)")
-    }
+class saket {
+    var name = ""
+}
 
+class saket1 {
+    var name = ""
+}
+
+protocol AnotherJustADelegate {
+    
+    //MARK: There are only 3 ways of initialization 1. ? , 2. ! , 3 var someVar = " " (i mean with a value)
+    // var name: String {get} -> In protocol you can initialize like , coz compiler knows that in class later you have to initialize like shown in 3. above.
+    var name: String? {get}
+    
+}
+
+protocol aView: JustADelegate, AnotherJustADelegate {
+//    func test()
+    //MARK: it is possible in swift that : one class can implement two protocols, that has exact same functions.
+}
+
+extension aView where Self: UIView {
+    
+}
+
+class ViewController: UIViewController, JustADelegate, aView {
+    
+    var name: String?
+    
+    func test() {
+    }
+    
+   
     @objc var testStr = "some text"
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //Mark: Multiple inheritance from classes 'UIViewController' and 'saket'
+        // you can't extend classes 2 classes , swift doen't support Multiple inheritance.
+        // you can implement as many protocols as you want. shown above
+        
         
         //MARK: Coping object NScoping...
         let sak1 = sak(name: "saket")
@@ -52,11 +102,8 @@ class ViewController: UIViewController, JustADelegate {
         //MARK: KVO Key value complaint.
         self.addObserver(self, forKeyPath: #keyPath(ViewController.testStr), options: [.new, .old], context: nil)
         
-        
         //MARK: KVC Key value complaint.
         self.setValue(" some kvc test .... ", forKey: #keyPath(ViewController.testStr))
-        
-        print("============== V1   viewDidLoad")
     }
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
@@ -68,34 +115,7 @@ class ViewController: UIViewController, JustADelegate {
          var sak1 = sak(name: "saket")
 //         sak1.value(forKeyPath: #keyPath(sak.name)) // 0
          sak1.setValue("saket has set a new name", forKeyPath: #keyPath(sak.name))
- 
-        print("============== V1   viewWillAppear \(sak1.name)")
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-     print("============== V1   viewDidAppear")
-    }
-    
-    override func viewWillLayoutSubviews() {
-        print("============== V1   viewWillLayoutSubviews")
-    }
-    
-    override func viewDidLayoutSubviews() {
-        print("============== V1   viewDidLayoutSubviews")
-    }
-    
-    
-    // =================
-    
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        print("============== V1   viewWillDisappear")
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        print("============== V1   viewDidDisappear")
-    }
-    
     
     //MARK: LAYOUT SUBVIEWS
     /*
@@ -196,6 +216,9 @@ class ViewController: UIViewController, JustADelegate {
         destination.delegate = self
     }
     
+    func dataCommunication(msg: String?) {
+        print(" printing from first vc :: \(msg)")
+    }
 }
 
 class someView: UIView {
@@ -217,13 +240,4 @@ class someView: UIView {
             }
         }
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
 }
