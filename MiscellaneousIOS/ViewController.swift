@@ -9,15 +9,21 @@
 import UIKit
 
 
-class sak: NSCopying {
+class sak: NSObject, NSCopying {
     
-    var name: String?
+    @objc var name: String?
     init(name: String) {
         self.name = name
     }
     func copy(with zone: NSZone? = nil) -> Any {
         return sak(name: self.name ?? "default")
     }
+    
+    func test()  {
+        self.setValue("some text is chan?ged kvo text setting", forKey: "name")
+    }
+    
+    
 }
 /*
  https://medium.freecodecamp.org/deep-copy-vs-shallow-copy-and-how-you-can-use-them-in-swift-c623833f5ad3
@@ -28,60 +34,90 @@ class sak: NSCopying {
  https://learnappmaking.com/lazy-computed-properties-swift/
  
  https://developer.apple.com/swift/blog/?id=7
+ Exilient Technologies - 10 nov 2018
+ =====================
+ Codable
+ Thread vs dispatch
+ Sync using thread
+ What is gcd
+ What is generics
+ What is kvc and kvo  -> done
+ What are size classes -> done
+ What is autolayout -> done
+ States of the app
+ Why is swift protocol oriented language
+ Why use core data in place in of sqlite
+ Difference b/w swift 4 and 4.2 -> done (enumation in enums, random int generator takes a range)
+ Push notifications
+ Submitting app to store
+ Svn vs git -> done https://stackoverflow.com/questions/871/why-is-git-better-than-subversion
  */
 
-class ViewController: UIViewController {
+class saket {
+    var name = ""
+}
 
-//    let testStr = "some text"
+class saket1 {
+    var name = ""
+}
+
+protocol AnotherJustADelegate {
+    
+    //MARK: There are only 3 ways of initialization 1. ? , 2. ! , 3 var someVar = " " (i mean with a value)
+    // var name: String {get} -> In protocol you can initialize like , coz compiler knows that in class later you have to initialize like shown in 3. above.
+    var name: String? {get}
+    
+}
+
+protocol aView: JustADelegate, AnotherJustADelegate {
+//    func test()
+    //MARK: it is possible in swift that : one class can implement two protocols, that has exact same functions.
+}
+
+extension aView where Self: UIView {
+    
+}
+
+class ViewController: UIViewController, JustADelegate, aView {
+    
+    var name: String?
+    
+    func test() {
+    }
+    
+   
+    @objc var testStr = "some text"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //Mark: Multiple inheritance from classes 'UIViewController' and 'saket'
+        // you can't extend classes 2 classes , swift doen't support Multiple inheritance.
+        // you can implement as many protocols as you want. shown above
+        
+        
+        //MARK: Coping object NScoping...
         let sak1 = sak(name: "saket")
         let sak2 = sak1.copy() as! sak
         sak2.name = "new saket"
         
-        print(sak1.name, sak2.name)
+        //MARK: KVO Key value complaint.
+        self.addObserver(self, forKeyPath: #keyPath(ViewController.testStr), options: [.new, .old], context: nil)
         
+        //MARK: KVC Key value complaint.
+        self.setValue(" some kvc test .... ", forKey: #keyPath(ViewController.testStr))
+    }
+    
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+//        print("\(keyPath, object, change, context)", separator: "  ::::  ", terminator: "======== ENDED")
         
-        
-        
-        
-//        self.setValue("some text is chan?ged kvo text setting", forKey: "some text")
-        
-//        print(" \(self.testStr)")
-        
-        print("============== V1   viewDidLoad")
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        print("============== V1   viewWillAppear")
+         var sak1 = sak(name: "saket")
+//         sak1.value(forKeyPath: #keyPath(sak.name)) // 0
+         sak1.setValue("saket has set a new name", forKeyPath: #keyPath(sak.name))
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-     print("============== V1   viewDidAppear")
-    }
-    
-    override func viewWillLayoutSubviews() {
-        print("============== V1   viewWillLayoutSubviews")
-    }
-    
-    override func viewDidLayoutSubviews() {
-        print("============== V1   viewDidLayoutSubviews")
-    }
-    
-    
-    // =================
-    
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        print("============== V1   viewWillDisappear")
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        print("============== V1   viewDidDisappear")
-    }
-    
     
     //MARK: LAYOUT SUBVIEWS
     /*
@@ -169,14 +205,22 @@ class ViewController: UIViewController {
 //        self.sleeping()
 //        self.changeNumber(num: num1)
 //        self.changeChar(char: &char1)
-//        self.performSegue(withIdentifier: "secondVC", sender: nil)
+        self.performSegue(withIdentifier: "secondVC", sender: nil)
+        
 //        let push = self.pushBehavior
 //        let push1 = self.pushBehavior1
     }
     
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let identifier = segue.identifier , let destination = segue.destination as? ViewControllerSecond else { return }
+        destination.firstVC = self
+        destination.delegate = self
+    }
     
-    
+    func dataCommunication(msg: String?) {
+        print(" printing from first vc :: \(msg)")
+    }
 }
 
 class someView: UIView {
@@ -198,13 +242,4 @@ class someView: UIView {
             }
         }
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
 }
