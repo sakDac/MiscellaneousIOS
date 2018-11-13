@@ -53,20 +53,50 @@ class sak: NSObject, NSCopying {
  Svn vs git -> done https://stackoverflow.com/questions/871/why-is-git-better-than-subversion
  */
 
+//MARK: you can't use same names even though other one is struct or enum
+
 class saket {
     var name = ""
 }
 
-class saket1 {
+struct saket1 {
     var name = ""
+}
+
+enum saket2: AnotherJustADelegate1 {
+    static func test() {
+        print("test got called static wala")
+    }
+    
+    func test() {
+        print("test got called")
+    }
+    
+    
+//    var name: String?
+    
+    case none
+}
+
+protocol AnotherJustADelegate1 {
+    //Class methods are only allowed within classes; use 'static' to declare a static method
+     func test()
+    
 }
 
 protocol AnotherJustADelegate {
     
     //MARK: There are only 3 ways of initialization 1. ? , 2. ! , 3 var someVar = " " (i mean with a value)
     // var name: String {get} -> In protocol you can initialize like , coz compiler knows that in class later you have to initialize like shown in 3. above.
-    var name: String? {get}
+     var name: String? {get}
+    //optional in protocol https://stackoverflow.com/questions/30979219/optional-can-only-be-applied-to-members-of-an-objc-protocol
     
+}
+
+extension AnotherJustADelegate {
+    var name: String {
+        return ""
+    }
 }
 
 protocol aView: JustADelegate, AnotherJustADelegate {
@@ -95,6 +125,7 @@ class ViewController: UIViewController, JustADelegate, aView {
         // you can't extend classes 2 classes , swift doen't support Multiple inheritance.
         // you can implement as many protocols as you want. shown above
         
+        saket2.none.test()
         
         //MARK: Coping object NScoping...
         let sak1 = sak(name: "saket")
