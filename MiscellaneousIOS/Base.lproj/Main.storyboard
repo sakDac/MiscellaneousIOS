@@ -76,6 +76,97 @@
             </objects>
             <point key="canvasLocation" x="2432.8000000000002" y="93.103448275862078"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="NKE-oe-Czw">
+            <objects>
+                <viewController id="ng0-nq-UQx" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="EFS-Is-GcW">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u6Y-bz-Lbm">
+                                <rect key="frame" x="61" y="346" width="264" height="100"/>
+                                <color key="backgroundColor" red="1" green="0.83342105040000003" blue="0.68562935800000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="5r7-GF-6g2">
+                                        <variation key="heightClass=compact-widthClass=compact" constant="50"/>
+                                    </constraint>
+                                    <constraint firstAttribute="height" constant="202" id="sxe-ze-com">
+                                        <variation key="heightClass=regular-widthClass=compact" constant="100"/>
+                                    </constraint>
+                                </constraints>
+                                <state key="normal" title="sample button">
+                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                </state>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="5r7-GF-6g2"/>
+                                        <exclude reference="sxe-ze-com"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=compact-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="5r7-GF-6g2"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="sxe-ze-com"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <mask key="constraints">
+                                        <include reference="5r7-GF-6g2"/>
+                                    </mask>
+                                </variation>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="u6Y-bz-Lbm" firstAttribute="leading" secondItem="zrB-ea-alP" secondAttribute="leading" constant="226" id="0B3-mh-WJN">
+                                <variation key="heightClass=compact-widthClass=compact" constant="100"/>
+                            </constraint>
+                            <constraint firstItem="zrB-ea-alP" firstAttribute="bottom" secondItem="u6Y-bz-Lbm" secondAttribute="bottom" constant="221" id="2tR-ez-AtR"/>
+                            <constraint firstItem="u6Y-bz-Lbm" firstAttribute="leading" secondItem="zrB-ea-alP" secondAttribute="leading" constant="61" id="B7t-J8-0Rr"/>
+                            <constraint firstItem="u6Y-bz-Lbm" firstAttribute="top" secondItem="zrB-ea-alP" secondAttribute="top" constant="346" id="KQ6-dI-Ai5">
+                                <variation key="heightClass=compact-widthClass=compact" constant="100"/>
+                            </constraint>
+                            <constraint firstItem="zrB-ea-alP" firstAttribute="trailing" secondItem="u6Y-bz-Lbm" secondAttribute="trailing" constant="342" id="jze-hk-3Hx">
+                                <variation key="heightClass=compact-widthClass=compact" constant="100"/>
+                            </constraint>
+                            <constraint firstItem="zrB-ea-alP" firstAttribute="trailing" secondItem="u6Y-bz-Lbm" secondAttribute="trailing" constant="50" id="lzI-sP-AzA"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="zrB-ea-alP"/>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="2tR-ez-AtR"/>
+                                <exclude reference="jze-hk-3Hx"/>
+                                <exclude reference="lzI-sP-AzA"/>
+                                <exclude reference="0B3-mh-WJN"/>
+                                <exclude reference="B7t-J8-0Rr"/>
+                                <exclude reference="KQ6-dI-Ai5"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=compact-widthClass=compact">
+                            <mask key="constraints">
+                                <include reference="jze-hk-3Hx"/>
+                                <include reference="0B3-mh-WJN"/>
+                                <include reference="KQ6-dI-Ai5"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="constraints">
+                                <include reference="2tR-ez-AtR"/>
+                                <include reference="lzI-sP-AzA"/>
+                                <include reference="B7t-J8-0Rr"/>
+                            </mask>
+                        </variation>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="B0c-Io-wxd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3165.5999999999999" y="96.7016491754123"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="ApP-by-PiQ">
             <objects>

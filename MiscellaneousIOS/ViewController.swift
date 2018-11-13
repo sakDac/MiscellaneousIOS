@@ -24,7 +24,10 @@ class sak: NSCopying {
  https://stackoverflow.com/questions/34042774/how-to-get-a-mutable-copy-of-a-class-in-swift
  
  https://stackoverflow.com/questions/31515805/difference-between-computed-property-and-property-set-with-closure
+ 
  https://learnappmaking.com/lazy-computed-properties-swift/
+ 
+ https://developer.apple.com/swift/blog/?id=7
  */
 
 class ViewController: UIViewController {
